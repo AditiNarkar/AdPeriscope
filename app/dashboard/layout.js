@@ -22,7 +22,6 @@ export default function Dashboard({ children }) {
 
             <NavItem label="Suggested Reels" icon="fas fa-video" link="/dashboard/content-generator" >
             </NavItem>
-            {/* Suggested video ideas based on user pain points and trends */}
 
           </ul>
         </div>

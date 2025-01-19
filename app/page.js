@@ -1,14 +1,17 @@
 "use client"
 
 import Link from "next/link";
-import { useState } from "react";
+import useStore from "./store/store";
 
 export default function Home() {
 
-    const [appName, setAppName] = useState('');
-    const [appDescription, setAppDescription] = useState('');
-    const [ageGroup, setAgeGroup] = useState('12-18');
-    const [interest, setInterest] = useState('Technology');
+    // const [appName, setAppName] = useState('');
+    // const [appDescription, setAppDescription] = useState('');
+    // const [ageGroup, setAgeGroup] = useState('12-18');
+    // const [interest, setInterest] = useState('Technology');
+
+
+    const { appName, setAppName, appDescription, setAppDescription, ageGroup, setAgeGroup, interest, setInterest } = useStore();
 
     // Update functions for each field
     const handleAppNameChange = (e) => {

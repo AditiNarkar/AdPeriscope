@@ -35,13 +35,26 @@ export default async function handler(req, res) {
 
         if (response.status === 200) {
             const currentTime = new Date().toISOString().replace(/[:]/g, ",");
-            const filePath = path.join(process.cwd(), "public", "images", currentTime + "_photo.webp");
+            const fileName = `${currentTime}_photo.webp`;
+            const filePath = path.join(process.cwd(), "public", "images", fileName);
             const dir = path.dirname(filePath);
             if (!fs.existsSync(dir)) {
                 fs.mkdirSync(dir, { recursive: true });
             }
             fs.writeFileSync(filePath, Buffer.from(response.data));
-            return res.status(200).json({ message: "Image generated successfully", filePath });
+            const imagesFilePath = path.join(process.cwd(), "public", "images.js");
+            let imagesArray = [];
+
+            if (fs.existsSync(imagesFilePath)) {
+                const fileContent = fs.readFileSync(imagesFilePath, "utf-8");
+                imagesArray = eval(fileContent.replace("export default", "").trim());
+            }
+
+            imagesArray.push(fileName);
+            const updatedContent = `const images = ${JSON.stringify(imagesArray, null, 4)};\n\nexport default images;\n`;
+            fs.writeFileSync(imagesFilePath, updatedContent, "utf-8");
+
+            return res.status(200).json({ message: "Image generated successfully", filePath, images: [fileName] });
         } else {
             return res.status(response.status).json({ message: response.data.toString() });
         }
