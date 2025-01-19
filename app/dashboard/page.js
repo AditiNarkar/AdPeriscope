@@ -2,8 +2,12 @@
 
 import React, { useState } from "react";
 import { Chart } from "react-google-charts";
+import { useRouter } from 'next/router';
 
 export default function Dashboard() {
+
+    const router = useRouter();
+
 
     const painPointData = [
         ["Source", "Mentions"],

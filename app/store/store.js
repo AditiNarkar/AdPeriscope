@@ -5,6 +5,7 @@ const useStore = create((set) => ({
     appDescription: '',
     interest: 'Technology',
     images: [],
+    ageGroup: '12-18',
 
     setImages: (newImages) => set({ images: newImages }),
     resetImages: () => set({ images: [] }), // Reset images
@@ -12,6 +13,10 @@ const useStore = create((set) => ({
     setAppName: (newAppName) => set((state) => {
         state.resetImages(); // Reset images when appName changes
         return { appName: newAppName };
+    }),
+    setAgeGroup: (newage) => set((state) => {
+        state.resetImages(); // Reset images when appName changes
+        return { ageGroup: newage };
     }),
     setAppDescription: (newAppDescription) => set((state) => {
         state.resetImages(); // Reset images when appDescription changes

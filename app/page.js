@@ -1,17 +1,14 @@
 "use client"
 
-import Link from "next/link";
+import { useRouter } from "next/navigation" // Import useRouter for navigation
+
 import useStore from "./store/store";
+import { useState } from "react";
 
 export default function Home() {
-
-    // const [appName, setAppName] = useState('');
-    // const [appDescription, setAppDescription] = useState('');
-    // const [ageGroup, setAgeGroup] = useState('12-18');
-    // const [interest, setInterest] = useState('Technology');
-
-
     const { appName, setAppName, appDescription, setAppDescription, ageGroup, setAgeGroup, interest, setInterest } = useStore();
+
+    const router = useRouter();
 
     // Update functions for each field
     const handleAppNameChange = (e) => {
@@ -30,15 +27,29 @@ export default function Home() {
         setInterest(e.target.value);
     };
 
+    const handleSubmit = async (e) => {
+        try {
+            const response = await fetch('/api/submitHomeData', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ keywords }),
+            });
+
+            if (response.ok) {
+                console.log('Data submitted successfully');
+            } else {
+                console.error('Failed to submit data');
+            }
+        } catch (error) {
+            console.error('Error submitting data:', error);
+        }
+    };
 
     return (
         <div className="container-fluid h-100">
-            <video
-                autoPlay
-                loop
-                muted
-                className="video-background"
-            >
+            <video autoPlay loop muted className="video-background">
                 <source src="waves1.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
             </video>
@@ -46,10 +57,7 @@ export default function Home() {
 
             <div className="row justify-content-center h-100 !z-10" style={{ position: "relative" }}>
                 <div className="col-md-8 col-xl-8 chat" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                    <img
-                        src="logo1.jpeg"
-                        className="rounded-circle user_img !w-[150px] !h-[150px] animate-moveInCircle"
-                    />
+                    <img src="logo1.jpeg" className="rounded-circle user_img !w-[150px] !h-[150px] animate-moveInCircle" />
                     <div className="main-title" style={{ fontSize: "2rem" }}>
                         AdPeriscope: Navigating the Waves of Advertising Insights...
                     </div>
@@ -79,11 +87,10 @@ export default function Home() {
                     </div>
 
                     <div style={{ display: "flex", gap: 10 }}>
-                        <Link href="/dashboard" passHref>
-                            <button className="button-64" role="button">
-                                <span className="text">Submit</span>
-                            </button>
-                        </Link>
+                        {/* Remove Link, use onClick to trigger handleSubmit directly */}
+                        <button className="button-64" role="button" onClick={handleSubmit}>
+                            <span className="text">Submit</span>
+                        </button>
                     </div>
                 </div>
             </div>
