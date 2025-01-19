@@ -28,23 +28,7 @@ export default function Home() {
     };
 
     const handleSubmit = async (e) => {
-        try {
-            const response = await fetch('/api/submitHomeData', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ keywords }),
-            });
-
-            if (response.ok) {
-                console.log('Data submitted successfully');
-            } else {
-                console.error('Failed to submit data');
-            }
-        } catch (error) {
-            console.error('Error submitting data:', error);
-        }
+        router.push("/dashboard")
     };
 
     return (

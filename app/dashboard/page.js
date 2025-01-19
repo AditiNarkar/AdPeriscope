@@ -4,8 +4,60 @@ import React, { useState } from "react";
 import { Chart } from "react-google-charts";
 
 export default function Dashboard() {
+    const [budget, setBudget] = useState(0);
+    const [strategies1, setStrategies] = useState([])
 
+    const handleBudget = async (e, budget = 300) => {
+        // e.preventDefault();
+        console.log(budget)
+        const strategies = {
+            low: {
+                description: "Low Budget",
+                strategies: [
+                    "Focus on organic content creation (posts, stories, videos)",
+                    "Leverage user-generated content and encourage sharing",
+                    "Engage with followers directly (reply to comments, direct messages)",
+                    "Run small contests or giveaways to increase engagement",
+                    "Use hashtags effectively to reach a wider audience",
+                ],
+            },
+            medium: {
+                description: "Medium Budget",
+                strategies: [
+                    "Run targeted paid ads (Facebook/Instagram Ads)",
+                    "Collaborate with micro-influencers for better reach",
+                    "Utilize sponsored posts and stories to boost visibility",
+                    "Optimize posting schedule for higher engagement",
+                    "Create high-quality video content that encourages interaction",
+                ],
+            },
+            high: {
+                description: "High Budget",
+                strategies: [
+                    "Run large-scale advertising campaigns with A/B testing",
+                    "Partner with top-tier influencers to increase brand visibility",
+                    "Sponsor events or webinars to increase reach and engagement",
+                    "Leverage retargeting ads for higher conversion",
+                    "Develop a comprehensive content calendar and professional video campaigns",
+                ],
+            },
 
+        }
+        let selectedStrategy;
+        if (budget < 100) {
+            selectedStrategy = strategies.low.strategies;
+        } else if (budget >= 100 && budget < 1000) {
+            selectedStrategy = strategies.medium.strategies;
+        } else if (budget >= 1000) {
+            selectedStrategy = strategies.high.strategies;
+        } else {
+            selectedStrategy = ["Please enter a valid budget."];
+        }
+
+        // Update state with the selected strategy (always an array)
+        setStrategies(selectedStrategy);
+
+    };
     const painPointData = [
         ["Source", "Mentions"],
         ["Reddit", 45],
@@ -158,7 +210,7 @@ export default function Dashboard() {
                 <ul className="text-white space-y-2">
                     <li>
                         <a
-                            href="https://www.competitora.com"
+                            href="https://youtu.be/BSzkrLyoo7E?si=IHypXoIMjBa7a7Hz"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-blue-400 hover:underline"
@@ -168,7 +220,7 @@ export default function Dashboard() {
                     </li>
                     <li>
                         <a
-                            href="https://www.competitorb.com"
+                            href="https://youtu.be/vIdFnVqGRM0?si=9DzK9mUAlOHIganY"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-blue-400 hover:underline"
@@ -178,7 +230,7 @@ export default function Dashboard() {
                     </li>
                     <li>
                         <a
-                            href="https://www.competitorc.com"
+                            href="https://youtu.be/gFiWc6a0_Bs?si=QgRna63PS_xbcSQt"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-blue-400 hover:underline"
@@ -188,7 +240,7 @@ export default function Dashboard() {
                     </li>
                     <li>
                         <a
-                            href="https://www.competitord.com"
+                            href="https://youtu.be/clHdLM0z2qw?si=M7V2gpPQ7Jz_kopf"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-blue-400 hover:underline"
@@ -214,7 +266,11 @@ export default function Dashboard() {
             <div className="bg-gray-800 backdrop-blur-lg bg-opacity-70 shadow-md p-4 rounded-lg mb-4">
                 <h2 className="text-lg font-semibold mb-4 text-white">What we can do to tackle competition ?</h2>
                 <div className="h-auto  text-white ">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nec risus ac enim viverra gravida. Integer laoreet dolor vitae arcu aliquam, et ullamcorper felis sollicitudin. Nulla facilisi. Mauris in est ut ante cursus viverra. Aenean euismod, tortor at sodales sollicitudin, eros purus scelerisque nulla, ac faucibus felis elit at libero. Phasellus placerat, magna ac suscipit tincidunt, dui sem posuere velit, sit amet viverra justo dui vel velit. Nulla ac nunc ut nulla faucibus vehicula at ac risus.
+                    Based on the analysis of user interactions, a typical persona for the audience discussing the
+                    keyword "AI" is someone who is both optimistic and cautious. They appreciate advancements in
+                    technology but are also concerned about privacy and job displacement. This persona can be further
+                    categorized into two distinct types: early adopters, who are more likely to be excited about new
+                    technologies, and skeptics, who are more cautious and demand proof of AI’s impact on society.
                 </div>
             </div>
 
@@ -276,16 +332,17 @@ export default function Dashboard() {
             </div>
 
             <div className="flex justify-between items-center mb-2">
-                <h1 className="text-2xl font-bold text-white">Content Recommendations</h1>
+                <h1 className="text-2xl font-bold text-white" >Content Recommendations</h1>
             </div>
             <div className="bg-gray-800 backdrop-blur-lg bg-opacity-70 shadow-md p-6 rounded-lg mb-4">
+                <input type="number" placeholder="enter budget" value={budget}
+                    onChange={(e) => setBudget(e.target.value)} /><button onClick={() => handleBudget()} className="text-white">Submit</button>
                 <h2 className="text-lg font-semibold mb-4 text-white">Suggested content formats and CTAs based on the research and insights.</h2>
                 <p className="text-white">
-                    Based on the analysis of user interactions, a typical persona for the audience discussing the
-                    keyword "AI" is someone who is both optimistic and cautious. They appreciate advancements in
-                    technology but are also concerned about privacy and job displacement. This persona can be further
-                    categorized into two distinct types: early adopters, who are more likely to be excited about new
-                    technologies, and skeptics, who are more cautious and demand proof of AI’s impact on society.
+                    {strategies1.map((strategy, index) => (
+                        <li key={index}>{strategy}</li>
+                    ))}
+
                 </p>
             </div>
 

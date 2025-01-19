@@ -20,7 +20,7 @@ export default function Dashboard({ children }) {
 
             <NavItem label="Content Recommendations" icon="fas fa-clipboard-list" />
 
-            <NavItem label="Suggested Reels" icon="fas fa-video" link="/dashboard/content-generator" >
+            <NavItem label="Suggested Content" icon="fas fa-video" link="/dashboard/content-generator" >
             </NavItem>
 
           </ul>
